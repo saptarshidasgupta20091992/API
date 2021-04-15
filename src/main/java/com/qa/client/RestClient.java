@@ -14,6 +14,8 @@ import org.json.JSONObject;
 
 public class RestClient {
 	
+	
+	//get
 	public void get(String url) throws ClientProtocolException, IOException {
 		
 		//GET() Method
