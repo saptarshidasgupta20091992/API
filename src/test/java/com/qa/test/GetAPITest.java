@@ -7,7 +7,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import com.qa.base.TestBase;
 import com.qa.client.RestClient;
-
+//TestNG Class
 public class GetAPITest extends TestBase {
 	
 	TestBase testBaseObj;
