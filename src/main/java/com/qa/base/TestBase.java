@@ -8,6 +8,7 @@ import java.util.Properties;
 public class TestBase {
 	
 	public Properties prop;
+	public String JSON_GET_SUCCESS_200OK_CODE = "200";
 	
 	//constructor
 	public TestBase() {
