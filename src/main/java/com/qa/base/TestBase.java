@@ -9,6 +9,7 @@ public class TestBase {
 	
 	public Properties prop;
 	public String JSON_GET_SUCCESS_200OK_CODE = "200";
+	public String JSON_POST_SUCCESS_201OK_CODE = "201";
 	
 	//constructor
 	public TestBase() {

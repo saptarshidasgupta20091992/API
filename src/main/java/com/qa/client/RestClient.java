@@ -8,6 +8,8 @@ import org.apache.http.Header;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
@@ -39,6 +41,25 @@ public class RestClient {
 			}
 			
 			CloseableHttpResponse closeableHttpResponse = httpClient.execute(httpget);
+			return closeableHttpResponse;
+			
+		}
+		
+	//post method with header
+public CloseableHttpResponse post(String url, String entityString, HashMap<String, String> headerMap) throws ClientProtocolException, IOException {
+			
+			//POST() Method
+			CloseableHttpClient httpClient = HttpClients.createDefault();
+			HttpPost httppost = new HttpPost(url);//https post request
+			
+			httppost.setEntity(new StringEntity(entityString));//for request payload
+			
+			//for headers
+			for(Map.Entry<String, String> entry : headerMap.entrySet()) {
+				httppost.addHeader(entry.getKey(), entry.getValue());
+			}
+			
+			CloseableHttpResponse closeableHttpResponse = httpClient.execute(httppost);
 			return closeableHttpResponse;
 			
 		}
