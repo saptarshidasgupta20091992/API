@@ -1,24 +1,19 @@
 package com.qa.test;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.HashMap;
 
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.util.EntityUtils;
-import org.json.JSONObject;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import com.qa.base.TestBase;
 import com.qa.client.RestClient;
-import com.qa.util.TestUtil;
 
 import junit.framework.Assert;
 
-public class PostAPITest extends TestBase {
+public class DeleteAPITest extends TestBase {
 	
 	TestBase testBaseObj;
 	String EndPointURL, ServiceURL, URL;
@@ -32,12 +27,13 @@ public class PostAPITest extends TestBase {
 		ServiceURL=prop.getProperty("serviceURL");
 		URL = EndPointURL+ServiceURL;
 	}
+
 	
 	@Test
-	public void postAPITestWithHeader() throws ClientProtocolException, IOException {
+	public void deleteAPITestWithHeader() throws ClientProtocolException, IOException {
 		
 		System.out.println();
-		System.out.println("Inside postAPITestWithHeader Method");
+		System.out.println("Inside deleteAPITestWithHeader Method");
 		System.out.println("=====================================");
 		HashMap<String, String> requestHeader = new HashMap<String, String>();
 		requestHeader.put("Content-Type","application/json");
@@ -45,36 +41,21 @@ public class PostAPITest extends TestBase {
 		//requestHeader.put("UserName","saptarshidasgupta20091992");
 		//requestHeader.put("Password","Mimisap@143");
 			
-		
-		String entityString = testBaseObj.fetchPayload("PostReqPayload.txt");
+			
 		restClient = new RestClient();
-		closeableHttpResponse = restClient.post(URL, entityString, requestHeader);
-				
+		closeableHttpResponse = restClient.delete(URL,requestHeader);
 		
 		
 		        //a. STATUS CODE
 				int statusCode = closeableHttpResponse.getStatusLine().getStatusCode();
 				System.out.println("API Response Status Code ----> "+statusCode);
-				Assert.assertEquals(Integer.parseInt(JSON_POST_SUCCESS_201OK_CODE), statusCode);
+				Assert.assertEquals(Integer.parseInt(JSON_DELETE_SUCCESS_204_CODE), statusCode);
 				
-				//b. JSON String
-				String responseString = EntityUtils.toString(closeableHttpResponse.getEntity(), "UTF-8");
-				JSONObject responseJson = new JSONObject(responseString);
-				System.out.println("API Response JSON Payload ----> "+responseJson);
 				
-				    //Extracting the per page value from JSon Payload
-				     String id = TestUtil.getValueByJPath(responseJson, "/id");
-				     System.out.println("ID Value --->"+id);
-				     
-				/*//c. All Headers
-				Header[] headersArray = closeableHttpResponse.getAllHeaders();
-				HashMap<String,String> allHeaderMap = new HashMap<String,String>();
-				for(Header header : headersArray) {
-					allHeaderMap.put(header.getName(),header.getValue());
-				}
-				System.out.println("API Response Header List ----> "+allHeaderMap);
-				*/
+				
 	}
 
-
+	
+	
+	
 }

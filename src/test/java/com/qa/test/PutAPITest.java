@@ -18,10 +18,10 @@ import com.qa.util.TestUtil;
 
 import junit.framework.Assert;
 
-public class PostAPITest extends TestBase {
+public class PutAPITest extends TestBase {
 	
 	TestBase testBaseObj;
-	String EndPointURL, ServiceURL, URL;
+	String EndPointURL, PutServiceURL, URL;
 	RestClient restClient;
 	CloseableHttpResponse closeableHttpResponse;
 	
@@ -29,15 +29,15 @@ public class PostAPITest extends TestBase {
 	public void setUp() {
 		testBaseObj = new TestBase();
 		EndPointURL=prop.getProperty("endPointURL");
-		ServiceURL=prop.getProperty("serviceURL");
-		URL = EndPointURL+ServiceURL;
+		PutServiceURL=prop.getProperty("ServicePutURL");
+		URL = EndPointURL+PutServiceURL;
 	}
 	
 	@Test
-	public void postAPITestWithHeader() throws ClientProtocolException, IOException {
+	public void putAPITestWithHeader() throws ClientProtocolException, IOException {
 		
 		System.out.println();
-		System.out.println("Inside postAPITestWithHeader Method");
+		System.out.println("Inside putAPITestWithHeader Method");
 		System.out.println("=====================================");
 		HashMap<String, String> requestHeader = new HashMap<String, String>();
 		requestHeader.put("Content-Type","application/json");
@@ -45,17 +45,16 @@ public class PostAPITest extends TestBase {
 		//requestHeader.put("UserName","saptarshidasgupta20091992");
 		//requestHeader.put("Password","Mimisap@143");
 			
-		
-		String entityString = testBaseObj.fetchPayload("PostReqPayload.txt");
+		String entityString = testBaseObj.fetchPayload("PutReqPayload.txt");
 		restClient = new RestClient();
-		closeableHttpResponse = restClient.post(URL, entityString, requestHeader);
+		closeableHttpResponse = restClient.put(URL, entityString, requestHeader);
 				
 		
 		
 		        //a. STATUS CODE
 				int statusCode = closeableHttpResponse.getStatusLine().getStatusCode();
 				System.out.println("API Response Status Code ----> "+statusCode);
-				Assert.assertEquals(Integer.parseInt(JSON_POST_SUCCESS_201OK_CODE), statusCode);
+				Assert.assertEquals(Integer.parseInt(JSON_PUT_SUCCESS_200OK_CODE), statusCode);
 				
 				//b. JSON String
 				String responseString = EntityUtils.toString(closeableHttpResponse.getEntity(), "UTF-8");
@@ -63,8 +62,16 @@ public class PostAPITest extends TestBase {
 				System.out.println("API Response JSON Payload ----> "+responseJson);
 				
 				    //Extracting the per page value from JSon Payload
-				     String id = TestUtil.getValueByJPath(responseJson, "/id");
-				     System.out.println("ID Value --->"+id);
+				     String UpdateTime = TestUtil.getValueByJPath(responseJson, "/updatedAt");
+				     System.out.println("Updated At --->"+UpdateTime);
+				     
+				   //Extracting the per page value from JSon Payload
+				     String name = TestUtil.getValueByJPath(responseJson, "/name");
+				     System.out.println("Updated name --->"+name);
+				     
+				   //Extracting the per page value from JSon Payload
+				     String job = TestUtil.getValueByJPath(responseJson, "/job");
+				     System.out.println("Updated job --->"+job);
 				     
 				/*//c. All Headers
 				Header[] headersArray = closeableHttpResponse.getAllHeaders();
